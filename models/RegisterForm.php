@@ -20,11 +20,21 @@ class RegisterForm extends Model {
             [['username', 'phone', 'email', 'child_birthday', 'agree'], 'required', 'message' => 'Заполните поле'],
             [['username'], 'match', 'pattern' => '/^([а-яА-ЯЁё]+)$/u', 'message' => 'Допускается использовать только кириллические символы'],
             [['agree'], 'integer'],
+            [['phone'], 'validatePhone'],
             [['email'], 'email', 'message' => 'Введенные данные не соответствуют формату email'],
             [['child_birthday'], 'date', 'format' => 'yyyy-MM-dd'],
             [['child_birthday'], 'validateDate'],
             [['agree'], 'in','range'=>range(1, 1), 'message' => 'Согласие с политикой обработки персональных данных обязательно для регистрации'],
             ];
+    }
+
+    public function validatePhone()
+    {
+        $phone_length = strlen($this->phone);
+
+        if ($phone_length < 10) {
+            $this->addError('phone', "Номер телефона должен состоять из 10 символов");
+        }
     }
 
     public function validateDate()
