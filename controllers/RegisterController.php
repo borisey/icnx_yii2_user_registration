@@ -18,7 +18,8 @@ class RegisterController extends Controller
             $user->email = $model->email;
             $user->child_birthday = $model->child_birthday;
             $user->agree = $model->agree;
-            if ($user->save()) {
+            if ($user->save())
+            {
                 return $this->render('success_registration');
             }
         }
